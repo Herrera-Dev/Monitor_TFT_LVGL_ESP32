@@ -26,8 +26,18 @@ Monitoreo de datos con una **ESP32** y **pantalla táctil TFT 2.4" SPI** con el 
 
 ## 🔌 Conexiones
 <p align="center">
-  <img src="/imagenes/connecting.jpg" alt="Conexiones" width="90%">
+  <img src="/imagenes/connecting.png" alt="Conexiones" width="90%">
 </p>
+
+### ⚠️ Advertencia sobre la alimentación de la pantalla TFT ILI9341
+
+**Verifique si su módulo ILI9341 incorpora un regulador de voltaje integrado.**
+- Algunos módulos incluyen un regulador de `5V → 3.3V`, por lo que pueden ser alimentados directamente desde `5V`.
+Otros no incluyen regulador y requieren estrictamente `3.3V` para evitar daños en el controlador.
+
+**Control del brillo de la retroiluminación (BL).**
+- En el proyecto, el brillo de la pantalla se controla por (hardware) mediante PWM generado en el `GPIO16` de la ESP32 a través de un transistor [ver imagen](imagenes/Backlight.png).
+- Si no desea controlar el brillo por PWM y prefiere que la pantalla permanezca con el brillo máximo, simplemente conecte el pin BL (retroiluminación) a 3.3 V de la ESP32.
 
 ## 🖥️ Hardware
 - **Placa:** ESP32
@@ -76,7 +86,7 @@ Si va realizar modificaciones a las imagenes o al diseño en el archivo `Diseño
 
 El script `linux_host_UART.py` recopila métricas del sistema host, como temperatura del CPU/GPU, uso de RAM, velocidad del ventilador, entre otros, y las envía al ESP32 a través de un puerto serial cada **10 segundos**. 
 
-- **Reconexión automática**: Detecta y reconecta automáticamente el puerto serial si se pierde la conexión en caso de estar trabajando con otrar placa de desarrollo.
+- **Reconexión automática**: Detecta y reconecta automáticamente el puerto serial si se pierde la conexión en caso de estar trabajando con otra placa de desarrollo.
 
 ### Requisitos de software para el script:
 
